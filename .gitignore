@@ -1,4 +1,4 @@
-lookups/sub-cleanse_dist.sh
+lookups/sub-cleanse.sh
 output.csv
 outputFinal.csv
 input/*.csv
