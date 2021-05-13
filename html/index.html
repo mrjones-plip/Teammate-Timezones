@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <link rel="stylesheet" href="./maptable.css">
+    <script src="./d3.min.js" charset="utf-8"></script>
+    <script src="./topojson.min.js"></script>
+    <script src="./maptable.js"></script>
+    <script type="text/javascript" src="luxon.min.js"></script>
+    <title>Teammates</title>
+</head>
+
+<body>
+
+    <h1>Teammates</h1>
+    <div id="vizContainer" ></div>
+
+    <script>
+        const DateTime = luxon.DateTime;
+        let timeZones = [];
+        let viz = d3.maptable('#vizContainer')
+        .csv('./outputFinal.csv')
+        .map({
+          path: 'countries.json',
+          countryIdentifierKey: 'ISO',
+          countryIdentifierType: 'iso_a2',
+          autoFitContent: false,
+            title: {
+                content: function (countShown, countTotal, filtersDescription, rawData, data) {
+                   var out = '';
+                   if (countShown === 0 || countTotal === 0) {
+                      out = "No data shown";
+                   } else if (countShown < countTotal) {
+                      out =
+                         `Showing <tspan font-weight="bold">${countShown} </tspan> Teammates from
+                            <tspan font-weight="bold"> ${countTotal} </tspan>`;
+                   } else {
+                      out = `<tspan font-weight="bold">${countTotal}</tspan> Teammates`;
+                   }
+                   if (filtersDescription !== '') out += " — " + filtersDescription;
+                   if (this.map.dataCountries.length) {
+                      var attrProperties = this.map.dataCountries[0].attrProperties.fill;
+                      if (attrProperties.key === 'id' && attrProperties.mode === 'count') {
+                         out += ` - Number of Teammates by Country`;
+                      } else {
+                         var key = attrProperties.columnDetails && attrProperties.columnDetails.title ?
+                            attrProperties.columnDetails.title :
+                            attrProperties.key;
+                         out +=
+                            ` - ${modeFormatted[attrProperties.mode]} <tspan font-weight="bold">${key}</tspan> by Country`;
+                      }
+                   }
+                   return out;
+                },
+                source: function () {
+                   return 'Source: <a xlink:href="https://example-company-directory.com">' +
+                      '<tspan font-weight="bold">Company Directory</tspan></a>';
+                }
+            },
+          countries: {
+            attr: {
+                stroke: "#fff",
+                "stroke-width": 0.5,
+              fill: {
+                empty: '#ccc',
+                min: '#cceeff',
+                max: '#0000FF',
+                legend: true,
+                aggregate: {
+                  mode: 'count',
+                  key: 'id',
+                }
+              },
+            },
+            tooltip: function(a) {
+              out = '<div class="arrow"></div>';
+              if (a.values.length === 0) {
+                out += '<h3 class="popover-title"> ' + a.properties.name + '</h3>';
+                out += '<div class="popover-content">N/A</div>';
+              } else {
+                out += '<h3 class="popover-title"> ' + a.values[0].Country + '</h3>';
+                out += '<div class="popover-content">' + a.values.length+ ' teammates</div>';
+              }
+              return out;
+            },
+          },
+          markers: {
+            tooltip: function (a) {
+              out = '<div class="arrow"></div>';
+              if (a.values.length === 0) {
+                out += '<h3 class="popover-title"> ' + a.key + '</h3>';
+                out += '<div class="popover-content">N/A</div>';
+              } else {
+                out += '<h3 class="popover-title"> ' +
+                    a.values[0].City + ', ' + a.values[0].Country +
+                    ' - <span class="timezone" tz="' + a.values[0].timezone + '">' + getTimeFromTz(a.values[0].timezone) +
+                    '</span></h3>';
+                out += '<div class="popover-content">';
+                for (i = 0; i < a.values.length; i++) out += " • " + a.values[i].Teammate + "<br>";
+                out += "</div>";
+              }
+              return out;
+            },
+            attr: {
+            fill: "#ffd513",
+            stroke: "black",
+            "stroke-width": 0.5,
+              r: {
+                min: 3,
+                max: 8,
+                aggregate: {
+                  mode: 'count',
+                  key: 'id',
+                }
+              },
+            }
+          }
+        })
+        .filters({
+             show: ['Teammate','Team','Country','City'],
+         })
+        .table({
+            show: ['Teammate','Team','Country','City','timezone'],
+        })
+        .columns({
+            Team: {
+                filterMethod: 'dropdown',
+            },
+            timezone: {
+                title: 'Time',
+                cellContent: function (d) {
+                    return "<span class='timezone' tz='" + d.timezone + "'>" + getTimeFromTz(d.timezone) + "</span>";
+                },
+                dataParse: function(d) {
+                    return getTimesortFromTz(d);
+                }
+            },
+        })
+        .render();
+
+        function updateTimes(){
+            let rowTz;
+            let rows = document.getElementsByClassName("timezone");
+            for (var i = 0; i < rows.length; i++) {
+                rowTz = rows.item(i).getAttribute('tz');
+                rows.item(i).innerHTML = getTimeFromTz(rowTz);
+            }
+        }
+
+        function getTimesortFromTz(tz){
+            const tzObj = DateTime.fromISO(DateTime.local(), {zone: tz});
+            return tzObj.toFormat('yyyy-LL-dd-HH-mm');
+        }
+        function getTimeFromTz(tz){
+            const tzObj = DateTime.fromISO(DateTime.local(), {zone: tz});
+            return tzObj.toFormat('ccc t');
+        }
+        setInterval(updateTimes, 1500);
+    </script>
+
+
+</body>
+
+</html>
