@@ -7,14 +7,8 @@ cat /dev/null > ./html/outputFinal.csv
 # clean up files and concat to one single file
 for file in ./input/*.csv; do
     if [ -f "$file" ]; then
-        teamName=$( echo "$file"|cut -d"/" -f3 | cut -d"." -f1 | tr "-" " " )
-        tempFile="${file}_temp"
-        cp $file $tempFile
-        sed -e "s/\r//g" -i $tempFile
-        sed -e "s/$/,$teamName/" -i $tempFile
-        tail -n +2 $tempFile >> output.csv
+        tail -n +2 $file >> output.csv
         echo -e "\n" >> output.csv
-        rm $tempFile
     fi
 done
 
@@ -33,14 +27,21 @@ fi
 # official timezone list: https://en.wikipedia.org/wiki/Zone.tab
 
 # inject lat lon and timezone
-echo "Teammate,ISO,Country,City,Descr,Title,Team,latitude,longitude,timezone" > ./html/outputFinal.csv
+echo "Teammate,Team,Title,City,Country,ISO,Hub,latitude,longitude,timezone" > ./html/outputFinal.csv
 while read p; do
   if [ "$p" != "" ]; then
     countryISO=$( echo "$p"|cut -d"," -f2 )
     countryFUll=$( echo "$p"|cut -d"," -f3 )
     city=$( echo "$p"|cut -d"," -f4 )
     latLonLine=$( grep "^\"$city" ./lookups/worldcities.csv | grep "\"$countryISO\"" | head -1 )
-    timezoneLine=$( grep "^$countryISO,$countryFUll,$city" ./lookups/country.city.timezone.offset.csv )
+
+    if [[ -f "./lookups/country.city.timezone.offset.csv"  ]]
+    then
+      timezoneLine=$( grep "^$countryISO,$countryFUll,$city" ./lookups/country.city.timezone.offset.csv )
+    else
+      timezoneLine='NA'
+    fi
+
     lat=$( echo "$latLonLine"|cut -d"\"" -f6)
     lon=$( echo "$latLonLine"|cut -d"\"" -f8 )
     tz=$( echo "$timezoneLine"|cut -d"," -f4 )

@@ -16,30 +16,30 @@ Teammate Timezones needs a file called `outputFinal.csv` in the `./html/` direct
 --- | --- | ---
 | Teammate | name of the person | Shaffan Fares |
 | ISO | 2 letter name in [ISO_3166-1_alpha-2 format](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) | CA |
-| Country | Full name of country | Canada |
-| City | City! | Victoria |
-| Descr | Info about the teammate | Loves Cheesemaking! |
+| Mailing Country | Full name of country | Canada |
+| Mailing City | City! | Victoria |
 | Title | Title at Company | Director of App Services |
 | Team | Team! | App Services |
+| Hub | Office the teammate is based out of | Dakar |
 | latitude | latitude! | 14.7319 |
 | longitude | longitude! | -17.4572 |
-| timezone | Official entry from [Zone.tab](https://en.wikipedia.org/wiki/Zone.tab) | America/Vancouver |
+| timezone | Official entry from [Zone.tab](https://en.wikipedia.org/wiki/Zone.tab) | Africa/Abidjan |
 
 The CSV must have at least the `Teammate` and `ISO` columns to render the choropleth.  It must have the `latitude` and `longitude` to generate a marker.  It must have `timezone` to generate the local time.
  
 ## CSV Example
 
-| Teammate | ISO | Country | City | Descr | Title | Team | latitude | longitude | timezone |
---- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Shaffan Fares | CA | Canada | Victoria | Cheesemaking | Director of App Services | Team A | 48.4283 | -123.3647 | America/Vancouver |
-| Majid Saber | SN | Senegal | Dakar | Cheesemaking | App Developer Manager | Team A | 14.7319 | -17.4572 | Africa/Abidjan |
-| Ghatiya Iman | SN | Senegal | Dakar | Cheesemaking | Sr App Developer | Team A | 14.7319 | -17.4572 | Africa/Abidjan |
+| Teammate | ISO | Mailing Country | Mailing City  | Title | Team |  Hub | latitude | longitude | timezone |
+--- | --- | --- | --- | --- | --- | --- | --- | ---  | ---  
+| Shaffan Fares | CA | Canada | Victoria | Director of App Services | Team A | Distributed | 48.4283 | -123.3647 | America/Vancouver |
+| Majid Saber | SN | Senegal | Dakar | App Developer Manager | Team A  | Dakar | 14.7319 | -17.4572 | Africa/Abidjan |
+| Ghatiya Iman | SN | Senegal | Dakar | Sr App Developer | Team A | Dakar |14.7319 | -17.4572 | Africa/Abidjan |
 
 ## CSV Generation 
 
-If you don't have a fully formed CSV file already, or have multiple sources of CVS, there's a `clean.sh` script to help you out.  It was developed for a very specific use case which may not apply to you. In order to use it you need:
+If you don't have a fully formed CSV file already there's a `clean.sh` script to help you out.  It was developed for a very specific use case which may not apply to you. In order to use it you need:
 
-1. At least one file ending in `.csv` in the `./input/` directory. The file name will be added to each line as the team name (`Team-A.csv` -> "Team A"). It should have 4 columns: `Teammate,Based in,Descr,Title`. `Based in` will be used to search for a lat lon.
+1. At least one file ending in `.csv` in the `./input/` directory.  `Mailing Country` and `Mailing City`  will be used to search for a lat lon.
 1. Optionally have a `sub-cleanse.sh` bash script in `./lookups/` where you can do any manual clean up needed. 
 1. Have a `country.city.timezone.offset.csv` file to lookup timezones in
 
