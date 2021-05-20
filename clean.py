@@ -2,16 +2,22 @@
 
 import csv
 import glob
+import os.path
 
 csvFiles = glob.glob('./input/*.csv')
 
 citiesFile = open("./lookups/worldcities.csv")
-timezonesFile = open("./lookups/country.city.timezone.offset.csv")
 outputFile = open('./html/outputFinal.csv', 'w', newline='')
 
 cities = csv.reader(citiesFile)
-timezones = csv.reader(timezonesFile)
 output = csv.writer(outputFile)
+
+if os.path.isfile("./lookups/country.city.timezone.offset.csv"):
+    timezonesFile = open("./lookups/country.city.timezone.offset.csv")
+    timezones = csv.reader(timezonesFile)
+else:
+    timezones = False
+    timezonesFile = False
 
 header = ["Teammate", "Team", "Title", "City", "Country",
           "Hub", "latitude", "longitude", "iso_a2", "timezone"]
@@ -33,7 +39,8 @@ for file in csvFiles:
 
         # rewind citiesFile CSV to beginning. if this isn't here "for city in cities" does nothing on N + 1 run
         citiesFile.seek(0)
-        timezonesFile.seek(0)
+        if timezones is not False:
+            timezonesFile.seek(0)
 
         # todo: cache found cities so do avoid this loop on cities we've seen before
         # todo: handle soft matches/more than one match - city names are NOT unique!
@@ -60,18 +67,23 @@ for file in csvFiles:
             teammate.append('NA')
             print('Could not resolve this teammate to a lat/lon: ' + str(teammate))
 
-        foundTimezone = False
-        for timezone in timezones:
-            searchCity = timezone[2]
-            searchISO2 = timezone[0]
-            searchTimezone = timezone[3]
-            if teammateCity == searchCity:
-                foundTimezone = True
-                teammate.append(searchTimezone)
-                break
+        if timezones is not False:
+            foundTimezone = False
+            for timezone in timezones:
+                searchCity = timezone[2]
+                searchISO2 = timezone[0]
+                searchTimezone = timezone[3]
+                if teammateCity == searchCity:
+                    foundTimezone = True
+                    teammate.append(searchTimezone)
+                    break
 
-        if not foundTimezone:
+            if not foundTimezone:
+                teammate.append('NA')
+                print('Could not resolve this teammate to a timezone: ' + str(teammate))
+        else:
             teammate.append('NA')
-            print('Could not resolve this teammate to a timezone: ' + str(teammate))
+            print('"./lookups/country.city.timezone.offset.csv" not present, can\'t resolve '
+                  'teammate to timezone: ' + str(teammate))
 
         output.writerow(teammate)
