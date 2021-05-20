@@ -26,7 +26,7 @@
         .csv('./outputFinal.csv')
         .map({
           path: 'countries.json',
-          countryIdentifierKey: 'ISO',
+          countryIdentifierKey: 'iso_a2',
           countryIdentifierType: 'iso_a2',
           autoFitContent: false,
             title: {
@@ -56,10 +56,6 @@
                    }
                    return out;
                 },
-                source: function () {
-                   return 'Source: <a xlink:href="https://example-company-directory.com">' +
-                      '<tspan font-weight="bold">Company Directory</tspan></a>';
-                }
             },
           countries: {
             attr: {
