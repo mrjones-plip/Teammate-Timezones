@@ -18,6 +18,7 @@
 <body>
 
     <h1>Teammates</h1>
+    <center><a href="./">Home</a></center>
     <div id="vizContainer" ></div>
 
     <script>
@@ -31,33 +32,6 @@
           countryIdentifierType: 'iso_a2',
           exportSvgClient: true,
           autoFitContent: false,
-            title: {
-                content: function (countShown, countTotal, filtersDescription, rawData, data) {
-                   var out = '';
-                   if (countShown === 0 || countTotal === 0) {
-                      out = "No data shown";
-                   } else if (countShown < countTotal) {
-                      out =
-                         `Showing <tspan font-weight="bold">${countShown} </tspan> Teammates from
-                            <tspan font-weight="bold"> ${countTotal} </tspan>`;
-                   } else {
-                      out = `<tspan font-weight="bold">${countTotal}</tspan> Teammates`;
-                   }
-                   if (filtersDescription !== '') out += " — " + filtersDescription;
-                   if (this.map.dataCountries.length) {
-                      var attrProperties = this.map.dataCountries[0].attrProperties.fill;
-                      if (attrProperties.key === 'id' && attrProperties.mode === 'count') {
-                      } else {
-                         var key = attrProperties.columnDetails && attrProperties.columnDetails.title ?
-                            attrProperties.columnDetails.title :
-                            attrProperties.key;
-                         out +=
-                            ` - ${modeFormatted[attrProperties.mode]} <tspan font-weight="bold">${key}</tspan> by Country`;
-                      }
-                   }
-                   return out;
-                },
-            },
           countries: {
             attr: {
                 stroke: "#fff",

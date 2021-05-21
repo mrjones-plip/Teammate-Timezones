@@ -18,6 +18,7 @@
 <body>
 
     <h1>Teammates</h1>
+    <center><a href="./">Home</a></center>
     <div id="vizContainer" ></div>
 
     <script>
@@ -122,7 +123,18 @@
              show: ['Teammate','Team','Country','City'],
          })
         .table({
-            show: ['Teammate','Team','Country','City','timezone'],
+            show: ['Teammate','Team','City','Country','timezone'],
+            // collapseRowsBy: ['Country'],
+			defaultSorting: [
+			    {
+			        key: 'timezone',
+			        mode: 'asc',
+			    },
+			    {
+			        key: 'Country',
+			        mode: 'asc',
+			    },
+			],
         })
         .columns({
             Team: {
