@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <link rel="stylesheet" href="./maptable.css">
+    <script src="./d3.min.js" charset="utf-8"></script>
+    <script src="./topojson.min.js"></script>
+    <script src="./maptable.js"></script>
+    <script type="text/javascript" src="luxon.min.js"></script>
+    <script type="text/javascript" src="FileSaver.min.js"></script>
+    <title>Teammates</title>
+</head>
+
+<body>
+
+    <h1>Teammates</h1>
+    <center><a href="./">Home</a></center>
+    <div id="vizContainer" ></div>
+
+    <script>
+        const DateTime = luxon.DateTime;
+        let timeZones = [];
+        let viz = d3.maptable('#vizContainer')
+        .csv('./outputFinal.csv')
+        .map({
+          path: 'countries.json',
+          countryIdentifierKey: 'iso_a2',
+          countryIdentifierType: 'iso_a2',
+          exportSvgClient: true,
+          autoFitContent: false,
+          countries: {
+            attr: {
+                stroke: "#fff",
+                "stroke-width": 0.5,
+              fill: {
+                empty: '#ccc',
+                min: '#cceeff',
+                max: '#0000FF',
+                legend: true,
+                aggregate: {
+                  mode: 'count',
+                  key: 'id',
+                }
+              },
+            },
+            tooltip: function(a) {
+              out = '<div class="arrow"></div>';
+              if (a.values.length === 0) {
+                out += '<h3 class="popover-title"> ' + a.properties.name + '</h3>';
+                out += '<div class="popover-content">N/A</div>';
+              } else {
+                out += '<h3 class="popover-title"> ' + a.values[0].Country + '</h3>';
+                out += '<div class="popover-content">' + a.values.length+ ' teammates</div>';
+              }
+              return out;
+            },
+          },
+          markers: false,
+        })
+        .render();
+
+
+    </script>
+
+
+</body>
+
+</html>
