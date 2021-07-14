@@ -8,7 +8,21 @@ Teammate Timezones is an interactive choropleth map showing where your teammates
 
 As well, you can download print ready SVGs from any map.  These SVGs can be edited in an image editor and each country's color can easily be changed as they're descrete objects.  See an SVG from the [simple map](./simple.sample.svg) or the [full map with markers](./full.sample.svg).
 
-To get started, generate a CSV file called `outputFinal.csv` using the "CSV Format" format below. Put it into the `html` directory and copy all the files in that directory to your website.
+## Getting started
+
+To get started, generate a CSV file called `outputFinal.csv` using the "CSV Format" format below. Put it into the `html` directory. 
+
+### Manual setup
+
+If you are adding the map to an existing website, simply copy the contents of the `html` directory to the directory where your website is being served.
+
+Otherwise, if you want to use Python to host the map on your current machine, navigate to the `html` directory and start a python web server: `python3 -m http.server`
+
+### docker-compose setup
+
+Alternatively, you can host the map locally in a Docker container using the provided docker-compose configuration. From the `Teammate-Timezones` directory, simply run `docker-compose up -d`. This will run a Docker container in the background to host the map. This container will restart automatically when the host machine is restarted. To stop the container, run `docker-compose down`.
+
+The map should be accessible locally at `http://0.0.0.0:8000/`
 
 ## CSV Format
 
