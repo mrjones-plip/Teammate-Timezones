@@ -1,0 +1,12 @@
+version: '3.7'
+  
+services:
+    teammate-timezones:
+        image: python:3
+        ports:
+        - 8000:8000
+        volumes:
+        - ./html:/usr/src/Teammate-Timezones/html
+        working_dir: /usr/src/Teammate-Timezones/html
+        command: python3 -m http.server
+        restart: unless-stopped
