@@ -1,11 +1,73 @@
+AR,Argentina,Pinamar,America/Argentina/Buenos_Aires
+AU,Australia,Adelaide,Australia/Adelaide
+BJ,Benin,Cotonou,Africa/Lagos
 CA,Canada,Montréal,America/Toronto
 CA,Canada,Toronto,America/Toronto
+CA,Canada,Vancouver,America/Vancouver
 CA,Canada,Victoria,America/Vancouver
+CM,Cameroon,Yaoundé,Africa/Douala
+CM,Cameroon,Yaounde,Africa/Douala
+CR,Costa Rica,San José,America/Costa_Rica
+CR,Costa Rica,Heredia,America/Costa_Rica
+CR,Costa Rica,Cartago,America/Costa_Rica
+ET,Ethiopia,Addis Ababa,Africa/Nairobi
+GH,Ghana,Accra,Africa/Accra
+GH,Guinea,Legon,Africa/Accra
+GN,Ghana,Conakry,Africa/Accra
+IN,India,Pune,Asia/Kolkata
+IN,India,Mumbai,Asia/Kolkata
+IT,Italy,Trieste,Europe/Rome
+FR,France,Grenoble,Europe/Rome
 KE,Kenya,Nairobi,Africa/Nairobi
+KE,Kenya,Siaya,Africa/Nairobi
+KE,Kenya,Kilifi,Africa/Nairobi
+LV,Latvia,Riga,Europe/Riga
+NG,Nigeria,Abuja,Africa/Lagos
+NG,Nigeria,Lagos,Africa/Lagos
+NG,Nigeria,Lokogoma,Africa/Lagos
+NG,Lokogoma,Abuja,Africa/Lagos
 NP,Nepal,Kathmandu,Asia/Kathmandu
+NP,Nepal,Kanchanpur,Asia/Kathmandu
+NP,Nepal,Lalitpur,Asia/Kathmandu
+NP,Nepal,Baglung,Asia/Kathmandu
+NP,Nepal,Banke,Asia/Kathmandu
+NZ,New Zealand,Auckland,Pacific/Auckland
+NZ,New Zealand,Dunedin,Pacific/Auckland
+NZ,New Zealand,Waikato,Pacific/Auckland
+MW,Malawi,Blantyre,Africa/Nairobi
+RO,Romania,Deva,Europe/Bucharest
+RO,Romania,Arad,Europe/Bucharest
 SN,Senegal,Dakar,Africa/Abidjan
 UG,Uganda,Kampala,Africa/Nairobi
+UG,Uganda,Buwate,Africa/Nairobi
+ID,Indonesia,Surabaya,Asia/Jakarta
+PY,Paraguay,Lambare,America/Asuncion
+UK,United Kingdom,London,GMT
+US,United States,Atlanta,America/New_York
+US,United States,Boston,America/New_York
+US,United States,Brockton,America/New_York
+US,United States,Chicago,America/Chicago
+US,United States,Quincy,America/Chicago
+US,United States,Columbus,America/New_York
+US,United States,Chattanooga,America/New_York
+US,United States,Durham,America/New_York
+US,United States,Concord,America/Los_Angeles
 US,United States,Denver,America/Denver
+US,United States,Fresno,America/Los_Angeles
+US,United States,Henderson,America/Los_Angeles
+US,United States,Meridian,America/Denver
 US,United States,New York,America/New_York
+US,United States,Washington DC,America/New_York
+US,United States,Brooklyn,America/New_York
+US,United States,Richmond,America/New_York
+US,United States,Cabin John,America/New_York
+US,United States,Portland,America/Los_Angeles
+US,United States,San Antonio,America/Chicago
+US,United States,Ann Arbor,America/Chicago
+US,United States,St. Louis,America/Chicago
 US,United States,San Francisco,America/Los_Angeles
-BR,Brazil,São Paulo,America/Rio_Branco
+US,United States,Novato,America/Los_Angeles
+US,United States,Seattle,America/Los_Angeles
+US,United States,Redmond,America/Los_Angeles
+US,United States,Kansas City,America/Chicago
+US,United States,Bozeman,America/Denver
